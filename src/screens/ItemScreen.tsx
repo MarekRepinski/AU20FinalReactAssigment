@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { FAB } from 'react-native-paper';
 
 export const ItemScreen = () => {
     return (
@@ -17,10 +18,16 @@ export const ItemScreen = () => {
                 <View style={{ backgroundColor: 'grey', height: 2, flex: 1, alignSelf: 'center' }} />
             </View>
             <View style={styles.mainView}>
-                <Text style={styles.mainViewText}>You do not have any products.</Text>
-                <Text style={styles.mainViewText}>Press the green button below to</Text>
-                <Text style={styles.mainViewText}>add a new one.</Text>
+                <Text style={styles.emptyText}>You do not have any products.</Text>
+                <Text style={styles.emptyText}>Press the green button below to</Text>
+                <Text style={styles.emptyText}>add a new one.</Text>
             </View>
+            <FAB
+                style={styles.fab}
+                small
+                icon="plus"
+                onPress={() => console.log('Pressed')}
+            />
         </SafeAreaView>
     )
 }
@@ -61,5 +68,16 @@ const styles = StyleSheet.create({
     },
     mainViewText: {
         fontSize: 20,
+    },
+    emptyText: {
+        fontSize: 20,
+        color: 'grey',
+    },
+    fab: {
+        backgroundColor: 'green',
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
     },
 })
