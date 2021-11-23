@@ -1,21 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useContext } from 'react';
+import { AuthContext, AuthContextProvider } from './src/context/AuthContext';
+import { StackedScreens } from './src/helpers/types';
+import { EditItemScreen } from './src/screens/EditItemScreen';
+import { ItemScreen } from './src/screens/ItemScreen';
+import LoginScreen from './src/screens/LoginScreen';
+import { initFirebase } from './src/services/firebaseService';
 
 export default function App() {
+  initFirebase();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthContextProvider>
+      <MainNavigator />
+    </AuthContextProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export const MainNavigator = () => {
+  const StackNavigator = createNativeStackNavigator<StackedScreens>();
+  const authContext = useContext(AuthContext);
+  return (
+    <NavigationContainer>
+      <StackNavigator.Navigator>
+        {!authContext?.isUserSignedIn && (
+          <StackNavigator.Screen name='LoginScreen' component={LoginScreen} />
+        )}
+        {authContext?.isUserSignedIn && (
+          <>
+            <StackNavigator.Screen name='ItemScreen' component={ItemScreen} options={{ headerShown: false }} />
+            <StackNavigator.Screen name='EditItemScreen' component={EditItemScreen} />
+          </>
+        )}
+      </StackNavigator.Navigator>
+    </NavigationContainer>
+  );
+}
+
