@@ -55,7 +55,7 @@ export default LoginScreen
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        backgroundColor: '#fff',
+        backgroundColor: 'snow',
         alignItems: 'center',
         justifyContent: 'space-evenly',
         height: '100%',

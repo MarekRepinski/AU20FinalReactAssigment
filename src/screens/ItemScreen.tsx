@@ -2,8 +2,10 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FAB } from 'react-native-paper';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { StackedScreens } from '../helpers/types';
 
-export const ItemScreen = () => {
+export const ItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'ItemScreen'>> = (props) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.topBar}>
@@ -26,7 +28,7 @@ export const ItemScreen = () => {
                 style={styles.fab}
                 small
                 icon="plus"
-                onPress={() => console.log('Pressed')}
+                onPress={() => { props.navigation.navigate('EditItemScreen') }}
             />
         </SafeAreaView>
     )
