@@ -1,8 +1,9 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 export interface IItemRow {
-    id?: string;
+    id: string;
     name: string;
     price: Number;
     productType: string;
@@ -10,24 +11,52 @@ export interface IItemRow {
 
 interface IItemRowComponent extends IItemRow {
     onSelect: () => void;
+    onDelete: () => void;
 }
 
 export const ItemRow: React.FC<IItemRowComponent> = (props) => {
+    const rightSwipeActions = () => {
+        return (
+            <Pressable
+                style={{
+                    backgroundColor: 'lightyellow',
+                    justifyContent: 'center',
+                    alignItems: 'flex-end',
+                }}
+                onPress={props.onDelete}
+                // onPress={() => console.log('deleting!!!')}
+            >
+                <Text
+                    style={{
+                        paddingHorizontal: 30,
+                        paddingVertical: 20,
+                    }}
+                >
+                    Delete
+                </Text>
+            </Pressable>
+        );
+    };
+
     return (
-        <Pressable style={[
-            styles.itemRowContainer,
-        ]}
-            onPress={props.onSelect}
-        // onPress={() => setSelected(!selected)}
+        <Swipeable
+            renderRightActions={rightSwipeActions}
         >
-            <View style={styles.titleRow}>
-                <Text style={styles.titleRowTextName}>{props.name}</Text>
-                <Text style={styles.titleRowTextType}>{props.productType}</Text>
-                <Text style={styles.titleRowTextPrice}>$ {props.price}</Text>
-            </View>
-        </Pressable>
+            <Pressable style={[
+                styles.itemRowContainer,
+            ]}
+                onPress={props.onSelect}
+            // onPress={() => setSelected(!selected)}
+            >
+                <View style={styles.titleRow}>
+                    <Text style={styles.titleRowTextName}>{props.name}</Text>
+                    <Text style={styles.titleRowTextType}>{props.productType}</Text>
+                    <Text style={styles.titleRowTextPrice}>$ {props.price}</Text>
+                </View>
+            </Pressable>
+        </Swipeable>
     )
-}
+}    
 
 const styles = StyleSheet.create({
     itemRowContainer: {

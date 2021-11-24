@@ -8,18 +8,24 @@ import { IItemRow, ItemRow } from '../components/ItemRow';
 
 export const ItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'ItemScreen'>> = (props) => {
     const [items, setItems] = useState<IItemRow[]>(mockData);
-    // const items: IItemRow[] = mockData;
-    console.log('Items: ' + items.length);
 
     const render = ({ item }: { item: IItemRow }) => {
         return (
             <ItemRow
+                id={item.id}
                 name={item.name}
                 productType={item.productType}
                 price={item.price}
+                onDelete={() => delItem(item.id)}
                 onSelect={() => console.log(item.name)} />
         );
     };
+
+    function delItem(id: string) {
+        const data = items.filter((item) => 
+        item.id != id).map(({id, name, productType, price}) => ({id, name, productType, price}));
+        setItems(data);
+    }
 
     return (
         <SafeAreaView style={styles.container}>
