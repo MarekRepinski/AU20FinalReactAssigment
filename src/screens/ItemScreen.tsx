@@ -27,6 +27,14 @@ export const ItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'ItemSc
         setItems(data);
     }
 
+    function editItem(id: string, name: string, productType: string, price: string) {
+    // function editItem(id: string) {
+        console.log(id);
+        console.log(name);
+        console.log(productType);
+        console.log(price);
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.topBar}>
@@ -60,7 +68,16 @@ export const ItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'ItemSc
                 style={styles.fab}
                 small
                 icon="plus"
-                onPress={() => { props.navigation.navigate('EditItemScreen') }}
+                onPress={() => { 
+                    props.navigation.navigate('EditItemScreen', 
+                    {
+                        id: '-1',
+                        name: '', 
+                        productType: '', 
+                        price: '',
+                        onSend: (id, name, productType, price) => editItem(id, name, productType, price), 
+                    }) 
+                }}
             />
         </SafeAreaView>
     )

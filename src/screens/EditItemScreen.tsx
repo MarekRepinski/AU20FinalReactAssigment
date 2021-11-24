@@ -6,14 +6,36 @@ import { Picker } from '@react-native-picker/picker';
 import { Feather, Foundation } from '@expo/vector-icons';
 
 export const EditItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'EditItemScreen'>> = (props) => {
+    const params = props.route.params;
     const [disabled, setDisabled] = useState(false);
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
-    const [type, setType] = useState();
+    const [type, setType] = useState('Integrated');
 
     useEffect(() => {
-        // const notNumb = isNaN(parseFloat(price));
-        setDisabled(name.length === 0 || isNaN(parseFloat(price)));
+        if (params.id !== '-1'){
+            setName(params.name);
+            setPrice(params.price);
+            setType(params.productType);
+        }
+    }),[];
+
+    useEffect(() => {
+        let notNumb = isNaN(parseFloat(price));
+        if (!notNumb){
+            if (type === 'Peripheral'){
+                if (parseInt(price) < 1){
+                    notNumb = true;
+                }
+            } else if (type === 'Integrated') {
+                if (parseInt(price) < 1000 || parseInt(price) > 2600){
+                    notNumb = true;
+                }
+            } else {
+                notNumb = true;
+            }
+        }
+        setDisabled(name.length === 0 || notNumb);
     }, [name, price]);
 
     return (
@@ -41,15 +63,18 @@ export const EditItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'Ed
                 <View style={styles.buttonsArea}>
                     <Pressable
                         disabled={disabled}
-                        style={styles.saveButton}
-                        onPress={() => { }}>
+                        style={ disabled ? styles.saveButtonDissad : styles.saveButton}
+                        onPress={() => {
+                            // params.onSend();
+                            // props.navigation.goBack();
+                            props.route.params.onSend(params.id, name, type, price);
+                        }}>
                         <Text style={styles.saveButtonText}>SAVE</Text>
                         <Feather name="download" size={48} color="white" style={{ flex: 1, }} />
                     </Pressable>
                     <Pressable
-                        disabled={disabled}
                         style={styles.cancelButton}
-                        onPress={() => { }}>
+                        onPress={() => { props.navigation.goBack(); }}>
                         <Text style={styles.cancelButtonText}>CANCEL</Text>
                         <Foundation name="prohibited" size={48} color="white" style={{ flex: 1, }} />
                     </Pressable>
