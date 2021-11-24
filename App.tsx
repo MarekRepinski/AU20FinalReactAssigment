@@ -24,8 +24,11 @@ export const MainNavigator = () => {
     <NavigationContainer>
       <StackNavigator.Navigator>
         {!authContext?.isUserSignedIn && (
+          <>
             <StackNavigator.Screen name='ItemScreen' component={ItemScreen} options={{ headerShown: false }} />
-            // <StackNavigator.Screen name='LoginScreen' component={LoginScreen} />
+            <StackNavigator.Screen name='EditItemScreen' component={EditItemScreen} options={{ headerShown: false }} />
+            {/* StackNavigator.Screen name='LoginScreen' component={LoginScreen} /> */}
+          </>
         )}
         {authContext?.isUserSignedIn && (
           <>
