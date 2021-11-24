@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { StyleSheet, View, Image, Text } from 'react-native'
+import { StyleSheet, View, Image, Text, SafeAreaView } from 'react-native'
 import { TextInput, Button } from "@react-native-material/core";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackedScreens } from '../helpers/types';
 import { AuthContext } from '../context/AuthContext';
+// Username: "test@test.com"
+// Password: "test1234"
 
 const LoginScreen: React.FC<NativeStackScreenProps<StackedScreens, 'LoginScreen'>> = (props) => {
     const [disabled, setDisabled] = useState(false);
@@ -16,7 +18,7 @@ const LoginScreen: React.FC<NativeStackScreenProps<StackedScreens, 'LoginScreen'
     }, [username, password]);
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.mainView}>
                 <Text style={styles.titleTextBig}>Final Assignment</Text>
                 <Text style={styles.titleTextSmall}>AU20 React Native, TypeScript</Text>
@@ -46,7 +48,7 @@ const LoginScreen: React.FC<NativeStackScreenProps<StackedScreens, 'LoginScreen'
                     style={[styles.width80, styles.marigin10]}
                     onPress={() => { authContext?.login(username, password) }} />
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -55,7 +57,7 @@ export default LoginScreen
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        backgroundColor: '#fff',
+        backgroundColor: 'snow',
         alignItems: 'center',
         justifyContent: 'space-evenly',
         height: '100%',
