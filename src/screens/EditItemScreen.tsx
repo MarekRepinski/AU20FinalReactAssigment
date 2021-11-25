@@ -14,6 +14,7 @@ export const EditItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'Ed
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [type, setType] = useState('Integrated');
+    const [title, setTitle] = useState('Create New Product');
 
     // Run once useEffect - sets states
     useEffect(() => {
@@ -21,6 +22,7 @@ export const EditItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'Ed
             setName(params.name);
             setPrice(params.price);
             setType(params.productType);
+            setTitle('Edit Product');
         }
     },[]);
 
@@ -47,7 +49,7 @@ export const EditItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'Ed
         <SafeAreaView style={styles.container}>
             <View style={styles.mainView}>
                 <Text style={styles.titleTextBig}>
-                    {params.id === '-1' ? 'Create New Product' : 'Edit Product'}
+                    {title}
                 </Text>
             </View>
             <View style={styles.loginView}>
