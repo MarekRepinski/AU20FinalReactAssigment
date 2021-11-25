@@ -1,3 +1,6 @@
+/*******************************************************************/
+/*  Component to ItemScreen - how every item is dispalyed in List  */
+/*******************************************************************/
 import React from 'react'
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -24,7 +27,6 @@ export const ItemRow: React.FC<IItemRowComponent> = (props) => {
                     alignItems: 'flex-end',
                 }}
                 onPress={props.onDelete}
-                // onPress={() => console.log('deleting!!!')}
             >
                 <Text
                     style={{
