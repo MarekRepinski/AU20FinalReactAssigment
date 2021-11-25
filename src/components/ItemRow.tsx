@@ -46,7 +46,6 @@ export const ItemRow: React.FC<IItemRowComponent> = (props) => {
                 styles.itemRowContainer,
             ]}
                 onPress={props.onSelect}
-            // onPress={() => setSelected(!selected)}
             >
                 <View style={styles.titleRow}>
                     <Text style={styles.titleRowTextName}>{props.name}</Text>
