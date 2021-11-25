@@ -1,3 +1,11 @@
+/****************************************************************/
+/*  FinalAssigment (misspelled)                                 */
+/*  AU20 React Natice TypeScript                                */
+/*  Marek Repinski  2021-11-25                                  */
+/*                                                              */
+/*  Webshop, sort of. You can add/edit/delete items and prices  */
+/****************************************************************/
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useContext } from 'react';

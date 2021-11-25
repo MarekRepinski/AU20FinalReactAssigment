@@ -1,3 +1,6 @@
+/*******************************************************************/
+/*  Screen for editing and creating items                          */
+/*******************************************************************/
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, SafeAreaView, Pressable } from 'react-native';
@@ -12,6 +15,7 @@ export const EditItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'Ed
     const [price, setPrice] = useState('');
     const [type, setType] = useState('Integrated');
 
+    // Run once useEffect - sets states
     useEffect(() => {
         if (params.id !== '-1'){
             setName(params.name);
@@ -20,6 +24,7 @@ export const EditItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'Ed
         }
     },[]);
 
+    // Disable "save"-button if criteria not met
     useEffect(() => {
         let notNumb = isNaN(parseFloat(price));
         if (!notNumb){
@@ -41,7 +46,9 @@ export const EditItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'Ed
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.mainView}>
-                <Text style={styles.titleTextBig}>Create New Product</Text>
+                <Text style={styles.titleTextBig}>
+                    {params.id === '-1' ? 'Create New Product' : 'Edit Product'}
+                </Text>
             </View>
             <View style={styles.loginView}>
                 <TextInput

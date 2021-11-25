@@ -1,3 +1,6 @@
+/*******************************************************************/
+/*  Context to check if user is logged in or not                   */
+/*******************************************************************/
 import React, { useState } from 'react';
 import { fbLogin, fbRegister } from '../services/firebaseService';
 

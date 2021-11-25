@@ -1,3 +1,7 @@
+/*******************************************************************/
+/*  Main Screen of the app. Shows the itemlist and has the logic   */
+/*  for adding, editing and deleting items                         */
+/*******************************************************************/
 import React, { useEffect, useState } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -10,10 +14,12 @@ export const ItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'ItemSc
     const [items, setItems] = useState<IItemRow[]>(mockData);
     const [forceReload, setForceReload] = useState(false);
 
+    // Force a reload after item edit
     useEffect(() => {
         // console.log('reloading ItemScreen');
     }, [items, forceReload]);
 
+    // Render function for <Flatlist />
     const render = ({ item }: { item: IItemRow }) => {
         return (
             <ItemRow
@@ -35,12 +41,14 @@ export const ItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'ItemSc
         );
     };
 
+    // Delete an item from the list
     function delItem(id: string) {
         const data = items.filter((item) =>
             item.id != id).map(({ id, name, productType, price }) => ({ id, name, productType, price }));
         setItems(data);
     }
 
+    // Edit or add an item
     function editItem(id: string, name: string, productType: string, price: string) {
         const data = items;
         if (id === '-1') {
@@ -162,7 +170,7 @@ const styles = StyleSheet.create({
     },
 })
 
-
+// Mockdata for testpurpose
 const mockData: IItemRow[] = [
     {
         id: '0',

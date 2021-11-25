@@ -1,3 +1,6 @@
+/*******************************************************************/
+/*  Controlled typeScript Types  (Navigation and screens)          */
+/*******************************************************************/
 export type StackedScreens = {
     LoginScreen: undefined;
     ItemScreen: undefined;

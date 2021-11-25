@@ -1,3 +1,6 @@
+/*******************************************************************/
+/*  Screen for login (with an animated GIF!)                       */
+/*******************************************************************/
 import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, View, Image, Text, SafeAreaView } from 'react-native'
 import { TextInput, Button } from "@react-native-material/core";

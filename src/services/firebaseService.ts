@@ -1,3 +1,6 @@
+/****************************************************************/
+/*  Firestore service - login and create account                */
+/****************************************************************/
 import { FirebaseApp, initializeApp } from "firebase/app";
 import { 
   getAuth, 
