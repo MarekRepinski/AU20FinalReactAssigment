@@ -18,7 +18,7 @@ export const EditItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'Ed
             setPrice(params.price);
             setType(params.productType);
         }
-    }),[];
+    },[]);
 
     useEffect(() => {
         let notNumb = isNaN(parseFloat(price));
@@ -45,12 +45,15 @@ export const EditItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'Ed
             </View>
             <View style={styles.loginView}>
                 <TextInput
-                    placeholder='Name'
-                    onChangeText={setName}
+                    defaultValue={name}
+                    placeholder={name}
+                    onChangeText={(text) => setName(text)}
+                    // value={textInputText}
                     style={[styles.width80, styles.marigin10, styles.textInputText]} />
                 <TextInput
+                    defaultValue={price}
                     placeholder='Price'
-                    onChangeText={setPrice}
+                    onChangeText={(text) => setPrice(text)}
                     keyboardType='numeric'
                     style={[styles.width80, styles.marigin10, styles.textInputText]} />
                 <Picker
@@ -65,9 +68,8 @@ export const EditItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'Ed
                         disabled={disabled}
                         style={ disabled ? styles.saveButtonDissad : styles.saveButton}
                         onPress={() => {
-                            // params.onSend();
-                            // props.navigation.goBack();
-                            props.route.params.onSend(params.id, name, type, price);
+                            props.navigation.goBack();
+                            params.onSend(params.id, name, type, price);
                         }}>
                         <Text style={styles.saveButtonText}>SAVE</Text>
                         <Feather name="download" size={48} color="white" style={{ flex: 1, }} />

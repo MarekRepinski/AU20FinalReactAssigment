@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FAB } from 'react-native-paper';
@@ -8,6 +8,11 @@ import { IItemRow, ItemRow } from '../components/ItemRow';
 
 export const ItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'ItemScreen'>> = (props) => {
     const [items, setItems] = useState<IItemRow[]>(mockData);
+    const [forceReload, setForceReload] = useState(false);
+
+    useEffect(() => {
+        // console.log('reloading ItemScreen');
+    }, [items, forceReload]);
 
     const render = ({ item }: { item: IItemRow }) => {
         return (
@@ -17,22 +22,46 @@ export const ItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'ItemSc
                 productType={item.productType}
                 price={item.price}
                 onDelete={() => delItem(item.id)}
-                onSelect={() => console.log(item.name)} />
+                onSelect={() => 
+                    props.navigation.navigate('EditItemScreen',
+                        {
+                            id: item.id,
+                            name: item.name,
+                            productType: item.productType,
+                            price: item.price.toString(),
+                            onSend: (id, name, productType, price) => editItem(id, name, productType, price),
+                        })
+                } />
         );
     };
 
     function delItem(id: string) {
-        const data = items.filter((item) => 
-        item.id != id).map(({id, name, productType, price}) => ({id, name, productType, price}));
+        const data = items.filter((item) =>
+            item.id != id).map(({ id, name, productType, price }) => ({ id, name, productType, price }));
         setItems(data);
     }
 
     function editItem(id: string, name: string, productType: string, price: string) {
-    // function editItem(id: string) {
-        console.log(id);
-        console.log(name);
-        console.log(productType);
-        console.log(price);
+        const data = items;
+        if (id === '-1') {
+            let newId: number = parseInt(data[data.length - 1].id);
+            newId = newId + 1;
+            data.push(
+                {
+                    id: newId.toString(),
+                    name: name,
+                    productType: productType,
+                    price: parseFloat(price),
+                });
+
+        } else {
+            const index = data.map(function (x) { return x.id; }).indexOf(id);
+            data[index].name = name;
+            data[index].productType = productType;
+            data[index].price = parseFloat(price);
+        }
+        setItems(data);
+        setForceReload(!forceReload);
     }
 
     return (
@@ -55,9 +84,9 @@ export const ItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'ItemSc
                 </View>
             }
             {items.length > 0 &&
-                <View style={{ padding: 1,}}>
+                <View style={{ padding: 1, }}>
                     <FlatList
-                        style={{ paddingHorizontal: 5,}}
+                        style={{ paddingHorizontal: 5, }}
                         data={items}
                         renderItem={render}
                         keyExtractor={(item) => item.id!}
@@ -68,15 +97,15 @@ export const ItemScreen: React.FC<NativeStackScreenProps<StackedScreens, 'ItemSc
                 style={styles.fab}
                 small
                 icon="plus"
-                onPress={() => { 
-                    props.navigation.navigate('EditItemScreen', 
-                    {
-                        id: '-1',
-                        name: '', 
-                        productType: '', 
-                        price: '',
-                        onSend: (id, name, productType, price) => editItem(id, name, productType, price), 
-                    }) 
+                onPress={() => {
+                    props.navigation.navigate('EditItemScreen',
+                        {
+                            id: '-1',
+                            name: '',
+                            productType: '',
+                            price: '',
+                            onSend: (id, name, productType, price) => editItem(id, name, productType, price),
+                        })
                 }}
             />
         </SafeAreaView>
